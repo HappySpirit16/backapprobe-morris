@@ -45,25 +45,9 @@ export class CdkStack extends cdk.Stack {
       role: lambdaRole,
     });   
     
-    const createCampanaLambda2 = new lambda.Function(this, createName("lambda", "Ecollet"), {
-      runtime: lambda.Runtime.JAVA_11,
-      handler: 'com.approbe.ecollet.EcolletHandler::handleRequest',
-      functionName: createName("lambda", "Ecollet"),
-      code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/Ecollet/Ecollet.zip")),
-      role: lambdaRole,
-    });
-    
-    const createCampanaLambda = new lambda.Function(this, createName("lambda", "prueba"), {
-      runtime: lambda.Runtime.JAVA_11,
-      handler: 'com.lomincosoft.validateidentity.LambdaFunctionHandler::handleRequest',
-      functionName: createName("lambda", "create-campana"),
-      code: lambda.Code.fromAsset(path.join(__dirname, "/../../ValidateIdentity/ValidateIdentity.zip")),
-      role: lambdaRole,
-    });  
-
     */
 
-    const zipPath = path.join(__dirname, "../../build/ValidateIdentity/ValidateIdentity.zip");
+    const zipPath = path.join(__dirname, "/../../build/co.approbe.cognito/co.approbe.cognito.zip");
 
     if (!fs.existsSync(zipPath)) {
       console.error("❌ No se encontró el archivo ZIP en:", zipPath);
@@ -72,11 +56,11 @@ export class CdkStack extends cdk.Stack {
 
     console.log("✅ Archivo ZIP encontrado en:", zipPath);
     
-    const createCampanaLambda = new lambda.Function(this, createName("lambda", "validateidentity-test"), {
+    const createCampanaLambda1 = new lambda.Function(this, createName("lambda", "cognito"), {
       runtime: lambda.Runtime.JAVA_11,
-      handler: 'com.lomincosoft.validateidentity.LambdaFunctionHandler::handleRequest',
-      functionName: createName("lambda", "validateidentity-test"),
-      code: lambda.Code.fromAsset(path.join(__dirname, "../../build/ValidateIdentity/ValidateIdentity.zip")),
+      handler: 'com.approbe.cognito.LambdaFunctionHandler::handleRequest',
+      functionName: createName("lambda", "cognito"),
+      code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.cognito/co.approbe.cognito.zip")),
       role: lambdaRole,
     });                                                 
 

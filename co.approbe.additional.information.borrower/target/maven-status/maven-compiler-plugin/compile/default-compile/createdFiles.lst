@@ -1,0 +1,6 @@
+co\approbe\additional\information\borrower\BasicInformation.class
+co\approbe\additional\information\borrower\EncriptadorAES.class
+co\approbe\additional\information\borrower\Borrower.class
+co\approbe\additional\information\borrower\Log.class
+co\approbe\additional\information\borrower\Request.class
+co\approbe\additional\information\borrower\LambdaFunctionHandler.class

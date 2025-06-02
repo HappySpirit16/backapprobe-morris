@@ -55,14 +55,6 @@ export class CdkStack extends cdk.Stack {
 
     console.log("✅ Archivo ZIP encontrado en:", zipPath);
     
-    const createCampanaLambda0 = new lambda.Function(this, createName("lambda", "cognito"), {
-      runtime: lambda.Runtime.JAVA_11,
-      handler: 'com.approbe.cognito.LambdaFunctionHandler::handleRequest',
-      functionName: createName("lambda", "cognito"),
-      code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.cognito/co.approbe.cognito.zip")),
-      role: lambdaRole,
-    });
-    
     const createCampanaLambda1 = new lambda.Function(this, createName("lambda", "cognito"), {
       runtime: lambda.Runtime.JAVA_11,
       handler: 'com.approbe.cognito.LambdaFunctionHandler::handleRequest',

@@ -95,6 +95,7 @@ export class CdkStack extends cdk.Stack {
       role: lambdaRole,
     });
 
+    /*
     const createCampanaLambda6 = new lambda.Function(this, createName("lambda", "authentic"), {
       runtime: lambda.Runtime.JAVA_11,
       handler: 'co.approbe.autentic.LambdaFunctionHandler::handleRequest',
@@ -102,6 +103,7 @@ export class CdkStack extends cdk.Stack {
       code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.autentic/co.approbe.autentic.zip")),
       role: lambdaRole,
     });
+    */
 
     const createCampanaLambda7 = new lambda.Function(this, createName("lambda", "general-information"), {
       runtime: lambda.Runtime.JAVA_11,
@@ -191,6 +193,7 @@ export class CdkStack extends cdk.Stack {
       role: lambdaRole,
     });
 
+    /*
     const createCampanaLambda18 = new lambda.Function(this, createName("lambda", "powwi-update"), {
       runtime: lambda.Runtime.JAVA_11,
       handler: 'co.approbe.powwi.update.LambdaFunctionHandler::handleRequest',
@@ -198,6 +201,7 @@ export class CdkStack extends cdk.Stack {
       code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.powwi.update/co.approbe.powwi.update.zip")),
       role: lambdaRole,
     });
+    */
 
     const createCampanaLambda19 = new lambda.Function(this, createName("lambda", "powwi-processactive"), {
       runtime: lambda.Runtime.JAVA_11,

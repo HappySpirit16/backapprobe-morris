@@ -1,0 +1,13 @@
+co\approbe\searchuser\TestUtils$1.class
+co\approbe\searchuser\TestUtils$DateTimeDeserializer.class
+co\approbe\searchuser\TestContext$TestLogger.class
+co\approbe\searchuser\TestUtils$DynamodbEventMixin$AttributeValueMixIn.class
+co\approbe\searchuser\TestUtils$DynamodbEventMixin.class
+co\approbe\searchuser\TestContext$1.class
+co\approbe\searchuser\TestUtils$DynamodbEventMixin$RecordMixin.class
+co\approbe\searchuser\TestUtils$TestJacksonMapperModule.class
+co\approbe\searchuser\TestUtils.class
+co\approbe\searchuser\TestUtils$DynamodbEventMixin$StreamRecordMixin.class
+co\approbe\searchuser\TestContext.class
+co\approbe\searchuser\TestUtils$UpperCaseRecordsPropertyNamingStrategy.class
+co\approbe\searchuser\TestUtils$DateTimeSerializer.class

@@ -55,6 +55,14 @@ export class CdkStack extends cdk.Stack {
 
     console.log("✅ Archivo ZIP encontrado en:", zipPath);
     
+    const createCampanaLambda0 = new lambda.Function(this, createName("lambda", "authorization"), {
+      runtime: lambda.Runtime.JAVA_11,
+      handler: 'com.approbe.cognito.LambdaFunctionHandler::handleRequest',
+      functionName: createName("lambda", "authorization"),
+      code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.authorization/co.approbe.authorization.zip")),
+      role: lambdaRole,
+    });
+
     const createCampanaLambda1 = new lambda.Function(this, createName("lambda", "cognito"), {
       runtime: lambda.Runtime.JAVA_11,
       handler: 'com.approbe.cognito.LambdaFunctionHandler::handleRequest',
@@ -95,7 +103,7 @@ export class CdkStack extends cdk.Stack {
       role: lambdaRole,
     });
 
-    /*
+    
     const createCampanaLambda6 = new lambda.Function(this, createName("lambda", "authentic"), {
       runtime: lambda.Runtime.JAVA_11,
       handler: 'co.approbe.autentic.LambdaFunctionHandler::handleRequest',
@@ -103,21 +111,12 @@ export class CdkStack extends cdk.Stack {
       code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.autentic/co.approbe.autentic.zip")),
       role: lambdaRole,
     });
-    */
 
     const createCampanaLambda7 = new lambda.Function(this, createName("lambda", "general-information"), {
       runtime: lambda.Runtime.JAVA_11,
       handler: 'co.approbe.general.information.Handler::handleRequest',
       functionName: createName("lambda", "general-information"),
       code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.general.information/co.approbe.general.information.zip")),
-      role: lambdaRole,
-    });
-
-    const createCampanaLambda8 = new lambda.Function(this, createName("lambda", "additional-information-borrower"), {
-      runtime: lambda.Runtime.JAVA_11,
-      handler: 'co.approbe.additional.information.borrower.LambdaFunctionHandler::handleRequest',
-      functionName: createName("lambda", "additional-information-borrower"),
-      code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.additional.information.borrower/co.approbe.additional.information.borrower.zip")),
       role: lambdaRole,
     });
 
@@ -129,11 +128,11 @@ export class CdkStack extends cdk.Stack {
       role: lambdaRole,
     });
 
-    const createCampanaLambda10 = new lambda.Function(this, createName("lambda", "chance-cron"), {
+    const createCampanaLambda8 = new lambda.Function(this, createName("lambda", "additional-information-borrower"), {
       runtime: lambda.Runtime.JAVA_11,
-      handler: 'co.approbe.chance.cron.Handler::handleRequest',
-      functionName: createName("lambda", "chance-cron"),
-      code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.chance.cron/co.approbe.chance.cron.zip")),
+      handler: 'co.approbe.additional.information.borrower.LambdaFunctionHandler::handleRequest',
+      functionName: createName("lambda", "additional-information-borrower"),
+      code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.additional.information.borrower/co.approbe.additional.information.borrower.zip")),
       role: lambdaRole,
     });
 
@@ -142,6 +141,14 @@ export class CdkStack extends cdk.Stack {
       handler: 'co.approbe.award.LambdaFunctionHandler::handleRequest',
       functionName: createName("lambda", "award"),
       code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.award/co.approbe.award.zip")),
+      role: lambdaRole,
+    });
+
+    const createCampanaLambda10 = new lambda.Function(this, createName("lambda", "chance-cron"), {
+      runtime: lambda.Runtime.JAVA_11,
+      handler: 'co.approbe.chance.cron.Handler::handleRequest',
+      functionName: createName("lambda", "chance-cron"),
+      code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.chance.cron/co.approbe.chance.cron.zip")),
       role: lambdaRole,
     });
 
@@ -219,10 +226,26 @@ export class CdkStack extends cdk.Stack {
       role: lambdaRole,
     });
 
+    const createCampanaLambda23 = new lambda.Function(this, createName("lambda", "search-user"), {
+      runtime: lambda.Runtime.JAVA_11,
+      handler: 'co.approbe.searchuser.LambdaFunctionHandler::handleRequest',
+      functionName: createName("lambda", "search-user"),
+      code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.searchuser/co.approbe.searchuser.zip")),
+      role: lambdaRole,
+    });
+
     const createCampanaLambda21 = new lambda.Function(this, createName("lambda", "select-pmt"), {
       runtime: lambda.Runtime.JAVA_11,
       handler: 'co.approbe.pmt.HandlerPmt::handleRequest',
       functionName: createName("lambda", "select-pmt"),
+      code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.pmt/co.approbe.pmt.zip")),
+      role: lambdaRole,
+    });
+
+    const createCampanaLambda22 = new lambda.Function(this, createName("lambda", "CreateEcollet"), {
+      runtime: lambda.Runtime.JAVA_11,
+      handler: 'co.approbe.pmt.HandlerPmt::handleRequest',
+      functionName: createName("lambda", "CreateEcollet"),
       code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.pmt/co.approbe.pmt.zip")),
       role: lambdaRole,
     });

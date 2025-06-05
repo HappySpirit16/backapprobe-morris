@@ -11,9 +11,9 @@ export class CdkStack extends cdk.Stack {
     super(scope, id, props);
 
     // Creamos un rol para asignarlo a la función lambda
-    const lambdaRole = new iam.Role(this, createName("lambda", "role-base"), {
+    const lambdaRole = new iam.Role(this, createName("lambda", "role-base-backapprobe"), {
       assumedBy: new iam.ServicePrincipal("lambda.amazonaws.com"),
-      roleName: createName("lambda", "role-base"),
+      roleName: createName("lambda", "role-base-backapprobe"),
       description: "Rol de IAM para que las funciones lambda puedan ejecutarse.",
     });
 

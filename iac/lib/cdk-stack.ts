@@ -34,18 +34,6 @@ export class CdkStack extends cdk.Stack {
       )
     )
 
-    /* //Creando lambdas
-    
-    const createCampanaLambda = new lambda.Function(this, createName("lambda", "prueba"), {
-      runtime: lambda.Runtime.JAVA_11,
-      handler: 'com.lomincosoft.validateidentity.LambdaFunctionHandler::handleRequest',
-      functionName: createName("lambda", "create-campana"),
-      code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/ValidateIdentity/ValidateIdentity.zip")),
-      role: lambdaRole,
-    });   
-    
-    */
-
     const zipPath = path.join(__dirname, "/../../build/co.approbe.cognito/co.approbe.cognito.zip");
 
     if (!fs.existsSync(zipPath)) {
@@ -153,6 +141,14 @@ export class CdkStack extends cdk.Stack {
       role: lambdaRole,
     });
 
+    const createCampanaLambda13 = new lambda.Function(this, createName("lambda", "consult-account"), {
+      runtime: lambda.Runtime.JAVA_11,
+      handler: 'co.approbe.consult.account.LambdaFunctionHandler::handleRequest',
+      functionName: createName("lambda", "consult-account"),
+      code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.consult.account/co.approbe.consult.account.zip")),
+      role: lambdaRole,
+    });
+
     const createCampanaLambda12 = new lambda.Function(this, createName("lambda", "core-demographic"), {
       runtime: lambda.Runtime.JAVA_11,
       handler: 'co.approbe.core.demographic.LambdaFunctionHandler::handleRequest',
@@ -161,11 +157,27 @@ export class CdkStack extends cdk.Stack {
       role: lambdaRole,
     });
 
-    const createCampanaLambda13 = new lambda.Function(this, createName("lambda", "consult-account"), {
+    const createCampanaLambda25 = new lambda.Function(this, createName("lambda", "core-druo"), {
       runtime: lambda.Runtime.JAVA_11,
-      handler: 'co.approbe.consult.account.LambdaFunctionHandler::handleRequest',
-      functionName: createName("lambda", "consult-account"),
-      code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.consult.account/co.approbe.consult.account.zip")),
+      handler: 'co.approbe.core.movement.LambdaFunctionHandler::handleRequest',
+      functionName: createName("lambda", "core-druo"),
+      code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.core.movement/co.approbe.core.movement.zip")),
+      role: lambdaRole,
+    });
+
+    const createCampanaLambda24 = new lambda.Function(this, createName("lambda", "core-movement"), {
+      runtime: lambda.Runtime.JAVA_11,
+      handler: 'co.approbe.core.movement.LambdaFunctionHandler::handleRequest',
+      functionName: createName("lambda", "core-movement"),
+      code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.core.movement/co.approbe.core.movement.zip")),
+      role: lambdaRole,
+    });
+
+    const createCampanaLambda15 = new lambda.Function(this, createName("lambda", "core"), {
+      runtime: lambda.Runtime.JAVA_11,
+      handler: 'co.approbe.core.LambdaFunctionHandler::handleRequest',
+      functionName: createName("lambda", "core"),
+      code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.core/co.approbe.core.zip")),
       role: lambdaRole,
     });
 
@@ -177,11 +189,11 @@ export class CdkStack extends cdk.Stack {
       role: lambdaRole,
     });
 
-    const createCampanaLambda15 = new lambda.Function(this, createName("lambda", "core"), {
+    const createCampanaLambda26 = new lambda.Function(this, createName("lambda", "powwi"), {
       runtime: lambda.Runtime.JAVA_11,
-      handler: 'co.approbe.core.LambdaFunctionHandler::handleRequest',
-      functionName: createName("lambda", "core"),
-      code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.core/co.approbe.core.zip")),
+      handler: 'co.approbe.powwi.auth.LambdaFunctionHandler::handleRequest',
+      functionName: createName("lambda", "powwi"),
+      code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.powwi/co.approbe.powwi.zip")),
       role: lambdaRole,
     });
 
@@ -201,7 +213,7 @@ export class CdkStack extends cdk.Stack {
       role: lambdaRole,
     });
 
-    /*
+    
     const createCampanaLambda18 = new lambda.Function(this, createName("lambda", "powwi-update"), {
       runtime: lambda.Runtime.JAVA_11,
       handler: 'co.approbe.powwi.update.LambdaFunctionHandler::handleRequest',
@@ -209,21 +221,12 @@ export class CdkStack extends cdk.Stack {
       code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.powwi.update/co.approbe.powwi.update.zip")),
       role: lambdaRole,
     });
-    */
 
     const createCampanaLambda19 = new lambda.Function(this, createName("lambda", "powwi-processactive"), {
       runtime: lambda.Runtime.JAVA_11,
       handler: 'co.approbe.processactive.LambdaFunctionHandler::handleRequest',
       functionName: createName("lambda", "powwi-processactive"),
       code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.processactive/co.approbe.processactive.zip")),
-      role: lambdaRole,
-    });
-
-    const createCampanaLambda20 = new lambda.Function(this, createName("lambda", "user-information"), {
-      runtime: lambda.Runtime.JAVA_11,
-      handler: 'co.approbe.userInformation.LambdaFunctionHandler::handleRequest',
-      functionName: createName("lambda", "user-information"),
-      code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.userInformation/co.approbe.userInformation.zip")),
       role: lambdaRole,
     });
 
@@ -248,6 +251,14 @@ export class CdkStack extends cdk.Stack {
       handler: 'co.approbe.pmt.HandlerPmt::handleRequest',
       functionName: createName("lambda", "CreateEcollet"),
       code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.pmt/co.approbe.pmt.zip")),
+      role: lambdaRole,
+    });
+
+    const createCampanaLambda20 = new lambda.Function(this, createName("lambda", "user-information"), {
+      runtime: lambda.Runtime.JAVA_11,
+      handler: 'co.approbe.userInformation.LambdaFunctionHandler::handleRequest',
+      functionName: createName("lambda", "user-information"),
+      code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.userInformation/co.approbe.userInformation.zip")),
       role: lambdaRole,
     });
 

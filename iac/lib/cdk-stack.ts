@@ -17,22 +17,45 @@ export class CdkStack extends cdk.Stack {
       description: "Rol de IAM para que las funciones lambda puedan ejecutarse.",
     });
 
-    // Añademos Managed Policies al rol de IAM
-    lambdaRole.addManagedPolicy(
-      iam.ManagedPolicy.fromAwsManagedPolicyName(
-        'CloudWatchLambdaInsightsExecutionRolePolicy',
-      )
-    );
-    lambdaRole.addManagedPolicy(
-      iam.ManagedPolicy.fromAwsManagedPolicyName(
-        'service-role/AWSLambdaBasicExecutionRole',
-      )
-    );
-    lambdaRole.addManagedPolicy(
-      iam.ManagedPolicy.fromAwsManagedPolicyName(
-        'service-role/AWSLambdaBasicExecutionRole',
-      )
-    )
+        // Politicas al rol creado
+        const awsManagedPolicies = [
+          'service-role/AWSLambdaBasicExecutionRole',
+          'CloudWatchLambdaInsightsExecutionRolePolicy',
+          'AmazonDynamoDBFullAccess',
+          'AmazonMQApiFullAccess',
+          'AmazonMQFullAccess',
+          'AmazonCognitoDeveloperAuthenticatedIdentities',
+          'AmazonCognitoPowerUser',
+          'SecretsManagerReadWrite'
+        ];
+        
+        for (const name of awsManagedPolicies) {
+          lambdaRole.addManagedPolicy(
+            iam.ManagedPolicy.fromAwsManagedPolicyName(name)
+          );
+        }
+        
+        /*
+        // Políticas Customer Managed
+        const customerManagedPolicies = [
+          'AWSLambdaBasicExecutionRole-efead4fd-cd7f-4f25-ad4b-7857a21fcd52',
+          'lambdaInvocation', 
+          'lambdaInvoke' 
+        ];
+        
+        for (const name of customerManagedPolicies) {
+          const arn = Stack.of(this).formatArn({
+            service: 'iam',
+            resource: 'policy',
+            resourceName: name,
+            region: '', 
+          });
+        
+          lambdaRole.addManagedPolicy(
+            iam.ManagedPolicy.fromManagedPolicyArn(this, `${name}Policy`, arn)
+          );
+        }
+        */
 
     const zipPath = path.join(__dirname, "/../../build/co.approbe.cognito/co.approbe.cognito.zip");
 
@@ -49,6 +72,9 @@ export class CdkStack extends cdk.Stack {
       functionName: createName("lambda", "authorization"),
       code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.authorization/co.approbe.authorization.zip")),
       role: lambdaRole,
+      environment: {
+        JAVA_TOOL_OPTIONS: "-XX:+TieredCompilation -XX:TieredStopAtLevel=1",
+      }      
     });
 
     const createCampanaLambda1 = new lambda.Function(this, createName("lambda", "cognito"), {
@@ -73,6 +99,9 @@ export class CdkStack extends cdk.Stack {
       functionName: createName("lambda", "simulator-loan"),
       code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.simulator.loan/co.approbe.simulator.loan.zip")),
       role: lambdaRole,
+      environment: {
+        JAVA_TOOL_OPTIONS: "-XX:+TieredCompilation -XX:TieredStopAtLevel=",
+      }      
     });
 
     const createCampanaLambda4 = new lambda.Function(this, createName("lambda", "status-relation"), {
@@ -89,6 +118,9 @@ export class CdkStack extends cdk.Stack {
       functionName: createName("lambda", "summary"),
       code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.summary/co.approbe.summary.zip")),
       role: lambdaRole,
+      environment: {
+        JAVA_TOOL_OPTIONS: "-XX:+TieredCompilation -XX:TieredStopAtLevel=1",
+      }      
     });
 
     /* //Errores con el archivo common
@@ -98,6 +130,18 @@ export class CdkStack extends cdk.Stack {
       functionName: createName("lambda", "authentic"),
       code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.autentic/co.approbe.autentic.zip")),
       role: lambdaRole,
+      environment: {
+        AUTH_AUDIENCE: "stag-api.autenticsign.com",
+        AUTH_CLIENTID: "nZMaxbmLBA6eZammY0n3BfRrMHD3dS7X",
+        AUTH_CLIENTSECRET: "9Nt9vaVKU080C0Amcm0T9tQFe3BZb5DvaWEN1RKZQYfMBpE59XrccbT9pn9Zt0kS",
+        AUTH_GRANTTYPE: "client_credentials",
+        AUTH_PASS: "a2Vubnkuc2lsdmFAYXBwcm9iZS5jb3xBcHByb2JlIC0gRHV2ZXJhUUF8OTAxNDk5MDM2NXxUaHUgSnVuIDE1IDE5OjQ4OjE2IFVUQyAyMDIzfFFVQjNqdy91RHBBbnk3bUs3TVo4Y2c9PXw=",
+        AWS_LAMBDA_EVENT_BODY_SIZE: "9106",
+        JAVA_TOOL_OPTIONS: "-XX:+TieredCompilation -XX:TieredStopAtLevel=1",
+        URL_FIRMA: "https://stag-api.autenticsign.com",
+        URL_OTP: "https://j4dmk2yez8.execute-api.us-east-1.amazonaws.com/test",
+        URL_TOKEN: "https://authorizer.autenticsign.com",
+      }
     });
     */
 
@@ -107,6 +151,9 @@ export class CdkStack extends cdk.Stack {
       functionName: createName("lambda", "general-information"),
       code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.general.information/co.approbe.general.information.zip")),
       role: lambdaRole,
+      environment: {
+        JAVA_TOOL_OPTIONS: "-XX:+TieredCompilation -XX:TieredStopAtLevel=1",
+      }      
     });
 
     const createCampanaLambda9 = new lambda.Function(this, createName("lambda", "powwi-auth"), {
@@ -115,6 +162,14 @@ export class CdkStack extends cdk.Stack {
       functionName: createName("lambda", "powwi-auth"),
       code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.powwi.auth/co.approbe.powwi.auth.zip")),
       role: lambdaRole,
+      environment: {
+        AUTH_ACCESS_KEY: "AKIA27LFKCXHQJDUZX5X",
+        AUTH_HOST: "baasbankingqa.powwi.co",
+        AUTH_REGION: "us-east-1",
+        AUTH_SECRET_KEY: "xbSqsGvQDZ9F+eqahWCI4+b9xWGm58yjnJYNyvZX",
+        AUTH_USERNAME: "BAAS_QA_DUVERA",
+        JAVA_TOOL_OPTIONS: "-XX:+TieredCompilation -XX:TieredStopAtLevel=1",
+      }      
     });
 
     const createCampanaLambda8 = new lambda.Function(this, createName("lambda", "additional-information-borrower"), {
@@ -131,6 +186,9 @@ export class CdkStack extends cdk.Stack {
       functionName: createName("lambda", "award"),
       code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.award/co.approbe.award.zip")),
       role: lambdaRole,
+      environment: {
+        JAVA_TOOL_OPTIONS: "-XX:+TieredCompilation -XX:TieredStopAtLevel=",
+      }      
     });
 
     const createCampanaLambda10 = new lambda.Function(this, createName("lambda", "chance-cron"), {
@@ -155,6 +213,9 @@ export class CdkStack extends cdk.Stack {
       functionName: createName("lambda", "core-demographic"),
       code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.core.demographic/co.approbe.core.demographic.zip")),
       role: lambdaRole,
+      environment: {
+        JAVA_TOOL_OPTIONS: "-XX:+TieredCompilation -XX:TieredStopAtLevel=1",
+      }      
     });
 
     const createCampanaLambda25 = new lambda.Function(this, createName("lambda", "core-druo"), {
@@ -171,6 +232,9 @@ export class CdkStack extends cdk.Stack {
       functionName: createName("lambda", "core-movement"),
       code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.core.movement/co.approbe.core.movement.zip")),
       role: lambdaRole,
+      environment: {
+        JAVA_TOOL_OPTIONS: "-XX:+TieredCompilation -XX:TieredStopAtLevel=1",
+      }      
     });
 
     const createCampanaLambda15 = new lambda.Function(this, createName("lambda", "core"), {
@@ -179,6 +243,14 @@ export class CdkStack extends cdk.Stack {
       functionName: createName("lambda", "core"),
       code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.core/co.approbe.core.zip")),
       role: lambdaRole,
+      environment: {
+        AUDIENCE: "https://sandbox.lms.kordev.io",
+        CLIENT_ID: "twMV6kgIwJItbGgHlPUMQTpTfNGgngcD",
+        JAVA_TOOL_OPTIONS: "-XX:+TieredCompilation -XX:TieredStopAtLevel=1",
+        SECRET_ID: "F4Vyj_10cNoOr1Mw2A2DSUCTVZJhdWFqLOuKgUJPS6ruRJM65c8S6ZKW2YYV_JTi",
+        URL_CORE: "https://sandbox.lms.kordev.io/",
+        URL_CORE_TOKEN: "https://auth.kordev.io",
+      }      
     });
 
     const createCampanaLambda14 = new lambda.Function(this, createName("lambda", "pmt"), {
@@ -187,6 +259,9 @@ export class CdkStack extends cdk.Stack {
       functionName: createName("lambda", "pmt"),
       code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.pmt/co.approbe.pmt.zip")),
       role: lambdaRole,
+      environment: {
+        JAVA_TOOL_OPTIONS: "-XX:+TieredCompilation -XX:TieredStopAtLevel=1",
+      }      
     });
 
     const createCampanaLambda26 = new lambda.Function(this, createName("lambda", "powwi"), {
@@ -203,6 +278,16 @@ export class CdkStack extends cdk.Stack {
       functionName: createName("lambda", "powwi-services"),
       code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.powwi.auth/co.approbe.powwi.auth.zip")),
       role: lambdaRole,
+      environment: {
+        AUTH_ACCESS_KEY: "AKIA27LFKCXHQJDUZX5X",
+        AUTH_HOST: "baasbankingqa.powwi.co",
+        AUTH_REGION: "us-east-1",
+        AUTH_SECRET_KEY: "xbSqsGvQDZ9F+eqahWCI4+b9xWGm58yjnJYNyvZX",
+        AUTH_USERNAME: "BAAS_QA_DUVERA",
+        JAVA_TOOL_OPTIONS: "-XX:+TieredCompilation -XX:TieredStopAtLevel=1",
+        URL_AWS: "https://vuwnwhdth3.execute-api.us-east-1.amazonaws.com/ApprobeDev/",
+        URL_GCP: "https://test.approbe.co/",
+      }      
     });
 
     const createCampanaLambda17 = new lambda.Function(this, createName("lambda", "powwi-transaction"), {
@@ -211,6 +296,23 @@ export class CdkStack extends cdk.Stack {
       functionName: createName("lambda", "powwi-transaction"),
       code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.powwi.transaction/co.approbe.powwi.transaction.zip")),
       role: lambdaRole,
+      environment: {
+        AUTH_ACCESS_KEY: "AKIA27LFKCXHQJDUZX5X",
+        AUTH_API: "Basic YXBwcm9iZTphcHByb2Jl",
+        AUTH_CUENTA: "(+57)1071041204",
+        AUTH_HOST: "baasbankingqa.powwi.co",
+        AUTH_IDCUENTA: "901499036",
+        AUTH_REGION: "us-east-1",
+        AUTH_SECRET_KEY: "xbSqsGvQDZ9F+eqahWCI4+b9xWGm58yjnJYNyvZX",
+        AUTH_USERNAME: "BAAS_QA_DUVERA",
+        EXCHANGE_NAME: "amq.direct",
+        JAVA_TOOL_OPTIONS: "-XX:+TieredCompilation -XX:TieredStopAtLevel=1",
+        MQ_HOST: "b-392c7a2c-8f5e-492d-8f6f-fad96c318a3d.mq.us-east-1.amazonaws.com",
+        MQ_PORT: "5671",
+        MQ_SECUR: "guestUser123&",
+        MQ_USER: "guestUser",
+        QUEUE_NAME: "core-queue",
+      }      
     });
 
     
@@ -220,6 +322,14 @@ export class CdkStack extends cdk.Stack {
       functionName: createName("lambda", "powwi-update"),
       code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.powwi.update/co.approbe.powwi.update.zip")),
       role: lambdaRole,
+      environment: {
+        AUTH_ACCESS_KEY: "AKIA27LFKCXHQJDUZX5X",
+        AUTH_HOST: "baasbankingqa.powwi.co",
+        AUTH_REGION: "us-east-1",
+        AUTH_SECRET_KEY: "xbSqsGvQDZ9F+eqahWCI4+b9xWGm58yjnJYNyvZX",
+        AUTH_USERNAME: "BAAS_QA_DUVERA",
+        JAVA_TOOL_OPTIONS: "-XX:+TieredCompilation -XX:TieredStopAtLevel=1",
+      }      
     });
 
     const createCampanaLambda19 = new lambda.Function(this, createName("lambda", "powwi-processactive"), {
@@ -236,6 +346,9 @@ export class CdkStack extends cdk.Stack {
       functionName: createName("lambda", "search-user"),
       code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.searchuser/co.approbe.searchuser.zip")),
       role: lambdaRole,
+      environment: {
+        JAVA_TOOL_OPTIONS: "-XX:+TieredCompilation -XX:TieredStopAtLevel=1",
+      }      
     });
 
     const createCampanaLambda21 = new lambda.Function(this, createName("lambda", "select-pmt"), {
@@ -260,6 +373,9 @@ export class CdkStack extends cdk.Stack {
       functionName: createName("lambda", "user-information"),
       code: lambda.Code.fromAsset(path.join(__dirname, "/../../build/co.approbe.userInformation/co.approbe.userInformation.zip")),
       role: lambdaRole,
+      environment: {
+        JAVA_TOOL_OPTIONS: "-XX:+TieredCompilation -XX:TieredStopAtLevel=1",
+      }      
     });
 
   }
